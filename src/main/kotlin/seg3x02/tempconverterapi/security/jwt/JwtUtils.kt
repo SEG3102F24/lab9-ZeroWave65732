@@ -1,6 +1,6 @@
 package seg3x02.tempconverterapi.security.jwt
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication
+import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.oauth2.jwt.JwtClaimsSet
 import org.springframework.security.oauth2.jwt.JwtEncoder
