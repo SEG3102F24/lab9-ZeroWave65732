@@ -20,7 +20,7 @@ import seg3x02.tempconverterapi.security.credentials.User
 import seg3x02.tempconverterapi.security.jwt.JwtUtils
 
 @RestController
-@CrossOrigin(origins = ["http://localhost:8080"])
+@CrossOrigin(origins = ["http://localhost:4200"])
 @RequestMapping("/auth")
 class AuthenticationController(val authenticationManager: AuthenticationManager,
                                val userRepository: UserRepository,
