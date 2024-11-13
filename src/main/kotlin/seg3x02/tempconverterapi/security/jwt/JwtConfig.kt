@@ -14,26 +14,27 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter
+import seg3x02.tempconverterapi.security.RsaKeyProperties
 
 @Configuration
 class JwtConfig(private val rsaKeys: RsaKeyProperties) {
     @Bean
     fun jwtDecoder(): JwtDecoder {
-        return NimbusJwtDecoder.
-        withPublicKey(rsaKeys.publicKey).build()
+        return NimbusJwtDecoder
+            .withPublicKey(rsaKeys.publicKey).build()
     }
 
     @Bean
     fun jwtEncoder(): JwtEncoder {
-        val jwk: JWK = RSAKey.Builder(rsaKeys.publicKey).rpivateKey(rsaKeys.privateKey).build()
+        val jwk: JWK = RSAKey.Builder(rsaKeys.publicKey).privateKey(rsaKeys.privateKey).build()
         val jwks: JWKSource<SecurityContext> = ImmutableJWKSet<SecurityContext>(JWKSet(jwk))
         return NimbusJwtEncoder(jwks)
     }
 
     @Bean
     fun jwtAuthenticationConverter(): JwtAuthenticationConverter {
-        val grantedAuthoritiesConverter: JwtGrantedAuthoritiesConverter()
-        grantedAuthoritiesConverter.setAuthorityPrefit("")
+        val grantedAuthoritiesConverter = JwtGrantedAuthoritiesConverter()
+        grantedAuthoritiesConverter.setAuthorityPrefix("")
 
         val jwtAuthenticationConverter = JwtAuthenticationConverter()
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter)
